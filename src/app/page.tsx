@@ -69,13 +69,18 @@ export default function Home() {
               ))}
             </div>
           </div>
-
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-4 mb-4">
             <button
               onClick={() => router.push('/onboarding')}
-              className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700"  
+              className="w-1/2 bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700"
             >
-              Get Started
+              Property Owners
+            </button>
+            <button
+              onClick={() => router.push('/technician')}
+              className="w-1/2 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
+            >
+              Technicians
             </button>
           </div>
         </div>

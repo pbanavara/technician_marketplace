@@ -23,7 +23,7 @@ export interface AgentMessage extends BaseMessage {
 export interface InitMessage extends BaseMessage {
     type: 'init';
     is_first_login: boolean;
-    onboarding_data?: Record<string, unknown>;
+    onboarding_data?: string;
 }
 
 // Action messages for specific operations

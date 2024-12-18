@@ -11,13 +11,16 @@ interface ThankYouStepProps {
 export default function ThankYouStep({ onComplete, formData }: ThankYouStepProps) {
     const { data: session } = useSession();
     const router = useRouter();
-    const USER_ID = session?.user?.email || '';
+
     onComplete = () => {
+        const USER_ID = formData.email || '';
+        setStorageItem("userType", 'landlord');
         setStorageItem(`${USER_ID}_hasLoggedIn`, 'false');
         setStorageItem(`${USER_ID}_onboardingData`,
             JSON.stringify(formData));
         router.push('/chat/agent');
     };
+
     return (
         <div className="text-center py-8">
             <div className="mb-8">

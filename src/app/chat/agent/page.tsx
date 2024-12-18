@@ -24,34 +24,32 @@ export default function AgentChat() {
     const [messages, setMessages] = useState<BaseMessage[]>([]);
     
     let hasLoggedInBefore: boolean = false;
-    const [onboardingData, setOnboardingData] = useState({});
-    const [userType, setUserType] = useState(session?.userType || 'landlord');
+    const onboardingData = getStorageItem(`${USER_ID}_onboardingData`) || '';
+    const userType = getStorageItem('userType') || '';
 
     // This first useEffect is for state  initialization with no dependency array elements.
     useEffect(() => {
-        setUserType(getStorageItem('userType') || 'landlord');
         hasLoggedInBefore = getStorageItem(`${USER_ID}_hasLoggedIn`) === 'true';
         console.log('hasLoggedInBefore:', hasLoggedInBefore);
         setIsFirstLogin(!hasLoggedInBefore);
-        setOnboardingData(JSON.parse(getStorageItem(`${USER_ID}_onboardingData`) || '{}'));
+        
     }, [])
 
     useEffect(() => {
         console.log("User ID in AgentChat:", USER_ID);
+        console.log("User Type in AgentChat:", userType);
         if (!USER_ID) return;
         const connectWebsocket = () => {
             wsRef.current = new WebSocket(`${WS_URL}/ws/agent/${USER_ID}`);
 
             wsRef.current.onmessage = (event) => {
                 const message = JSON.parse(event.data);
-                if (message.sender_id === "agent") {
-                    setMessages(prevMessages => [...prevMessages, message]);
-                    setInputMessage('');
-                }
-                
+                setMessages(prevMessages => [...prevMessages, message]);
+                setInputMessage(''); 
             };
 
             wsRef.current.onopen = () => {
+                
                 console.log('WebSocket connection opened');
                 if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
 
@@ -73,20 +71,21 @@ export default function AgentChat() {
             wsRef.current.onerror = (error) => {
                 console.log('WebSocket error:', error);
                 setTimeout(() => {
-                    connectWebsocket();
+                    //connectWebsocket();
                 }, 1000);
             };
 
             wsRef.current.onclose = () => {
                 console.log('WebSocket connection closed');
                 setTimeout(() => {
-                    connectWebsocket();
+                    //connectWebsocket();
                 }, 1000);
             };
         };
         connectWebsocket();
         return () => {
             if (wsRef.current) {
+                console.log('WS State before unmount:', wsRef.current.readyState)
                 wsRef.current.close();
             }
         };
@@ -103,8 +102,9 @@ export default function AgentChat() {
             timestamp: new Date().toISOString(),
             user_type: userType
         };
-
-        wsRef.current.send(JSON.stringify(userMessage));
+        if (wsRef.current.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify(userMessage));
+        }
         setMessages(prev => [...prev, userMessage]);
         setInputMessage('');
     };
@@ -114,7 +114,14 @@ export default function AgentChat() {
             {/* Main Chat Container - Centered in Remaining Space */}
             <div className="flex-1 p-6 flex justify-center">
                 <div className="w-full max-w-4xl">
-                    
+                    <h1 className="text-center mb-8">
+                        <div className="text-6xl font-bold text-white mb-2">
+                            RepairDAO
+                        </div>
+                        <div className="text-3xl text-indigo-400">
+                            An AI-Powered Elite Technician Network
+                        </div>
+                    </h1>
 
                     <div className="bg-gray-800 rounded-lg shadow-xl overflow-hidden">
                         {/* Rest of your chat window code */}

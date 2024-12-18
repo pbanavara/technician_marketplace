@@ -18,14 +18,14 @@ export default function Onboarding() {
             sessionStorage.setItem('USER_ID', USER_ID);
         }
     }, [USER_ID]);
+
     const [formData, setFormData] = useState({
-        phone: '',
-        email: session?.user?.email || '',
-        numberOfHomes: 0,
         name: '',
+        email: '',
+        phone: '',
+        user_type: 'landlord',
+        address: '',
         properties: [],
-        // Remove the landlord hardcoding later as we move through configuration wizard
-        userType: 'landlord',
         tenants: []
     });
     
@@ -51,6 +51,7 @@ export default function Onboarding() {
 
     const handleComplete = async () => {
         // Save data and redirect to chat
+        
         router.push('/chat/agent');
     };
 
