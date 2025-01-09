@@ -8,9 +8,6 @@ import { getStorageItem, setStorageItem } from '../utils/storage';
 
 export default function TechnicianOnboarding() {
     const router = useRouter();
-    const { data: session } = useSession();
-    const USER_ID = session?.user?.email || '';
-
     const [formData, setFormData] = useState({
         name: '',
         email: '',

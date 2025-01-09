@@ -48,13 +48,6 @@ export default function Onboarding() {
                 return null;
         }
     };
-
-    const handleComplete = async () => {
-        // Save data and redirect to chat
-        
-        router.push('/chat/agent');
-    };
-
     return (
 
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">

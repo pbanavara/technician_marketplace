@@ -1,7 +1,4 @@
 'use client';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { setStorageItem } from '../utils/storage';
 
 interface TechnicianStepProps {
     formData: any;
@@ -17,13 +14,6 @@ export default function TechnicianStep({ formData, setFormData, onBack, onComple
             [field]: value
         });
     };
-
-    const { data: session } = useSession();
-    const router = useRouter();
-    const USER_ID = formData.email || '';
-
-    
-
     return (
         <div>
             <h2 className="text-2xl font-bold text-white mb-6">Technician Information</h2>
