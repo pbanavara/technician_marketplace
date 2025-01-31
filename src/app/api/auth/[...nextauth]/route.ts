@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import 'next-auth'
+import { kv } from '@vercel/kv'
 
 declare module 'next-auth' {
     interface Session {

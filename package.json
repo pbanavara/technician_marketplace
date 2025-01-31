@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@vercel/kv": "^3.0.0",
     "next": "^15.0.4",
     "next-auth": "^4.24.10",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "redis": "^4.7.0",
     "websocket": "^1.0.35",
     "ws": "^8.18.0"
   },
